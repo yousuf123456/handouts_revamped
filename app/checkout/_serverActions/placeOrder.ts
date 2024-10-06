@@ -144,6 +144,7 @@ export const placeOrder = async ({
         query: {
           _id: { $oid: dbUserId },
           collectedVouchers: {
+            //@ts-ignore
             $elemMatch: { "voucher.id": { $in: appliedVoucherIds } },
           },
         },
