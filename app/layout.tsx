@@ -3,22 +3,12 @@ import "./globals.css";
 import { Footer } from "./(landing)/_components/footer/Footer";
 import { Header } from "./(landing)/_components/newHeader/Header";
 
-import { Nunito, Inter, Montserrat } from "next/font/google";
+import { Nunito, Inter } from "next/font/google";
 import { Providers } from "./_components/Providers";
 
+import NextTopLoader from "nextjs-toploader";
+
 const inter = Inter({ weight: "variable", subsets: ["latin"] });
-
-// const roboto = Roboto({
-//   subsets: ["latin"],
-//   weight: "400",
-//   variable: "--font-roboto",
-// });
-
-// const poppins = Poppins({
-//   subsets: ["latin"],
-//   weight: "400",
-//   variable: "--font-poppins",
-// });
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -41,6 +31,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${nunito.variable} ${inter.className}`}>
+        <NextTopLoader color="#000000" showSpinner={false} shadow={false} />
+
         <Providers>
           <Header />
           {children}

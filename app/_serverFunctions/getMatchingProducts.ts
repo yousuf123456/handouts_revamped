@@ -6,6 +6,7 @@ import { AtlasSearchPaginationParams, ProductAttributes } from "../_types";
 import { mapMongoToPrisma } from "../_utils/formatingUtils";
 import { ProductCardProps } from "../_components/ProductCard";
 import { MATCHING_PRODUCTS_PER_PAGE } from "../_config/pagination";
+import { fakeDelay } from "../dashboard/orders/_components/UserOrders";
 
 type ProjectStage = {
   [K in keyof ProductCardProps["product"]]: any;

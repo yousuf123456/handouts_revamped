@@ -10,6 +10,8 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { useSession } from "@clerk/nextjs";
 import { IconWrapper } from "@/app/(landing)/_components/newHeader/components/IconWrapper";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { getSignInUrl } from "@/app/_config/routes";
 
 type ProductActionsProps = Parameters<typeof addToCart>[number] &
   Parameters<typeof addToFavorites>[number] & {
@@ -17,7 +19,10 @@ type ProductActionsProps = Parameters<typeof addToCart>[number] &
   };
 
 export const ProductActions = (props: ProductActionsProps) => {
-  const dbUserId = useSession().session?.user.publicMetadata.dbUserId;
+  const { session, isSignedIn } = useSession();
+
+  const dbUserId = session?.user.publicMetadata.dbUserId;
+
   const alreadyFavorited = props.favoritedByIds.some((id) => id === dbUserId);
 
   const [isAlreadyFavorited, setIsAlreadyFavorited] =
@@ -25,7 +30,13 @@ export const ProductActions = (props: ProductActionsProps) => {
 
   const [isPerformingAction, setIsPerformingAction] = useState(false);
 
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const onAddToCart = async () => {
+    if (!isSignedIn) return router.push(getSignInUrl(pathname, searchParams));
+
     setIsPerformingAction(true);
 
     const promise = addToCart({
@@ -50,6 +61,8 @@ export const ProductActions = (props: ProductActionsProps) => {
   };
 
   const onAddToFavorites = async () => {
+    if (!isSignedIn) return router.push(getSignInUrl(pathname, searchParams));
+
     setIsPerformingAction(true);
 
     const promise = addToFavorites({

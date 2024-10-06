@@ -2,9 +2,8 @@
 import prisma from "@/app/_libs/prismadb";
 
 import { ActionResult } from "@/app/_types";
-import { userAuthentication } from "@/app/_serverFunctions/userAuthentication";
-import { revalidateTag } from "next/cache";
 import { userCartCache } from "../_config/cache";
+import { userAuthentication } from "@/app/_serverFunctions/userAuthentication";
 
 export const addToCart = async ({
   selectedCombinationId,

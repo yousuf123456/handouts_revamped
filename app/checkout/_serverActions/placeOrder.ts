@@ -139,18 +139,18 @@ export const placeOrder = async ({
           numOfSales: { increment: 1 },
         },
       }),
-      // prisma.$runCommandRaw({
-      //   findAndModify: "User",
-      //   query: {
-      //     _id: { $oid: dbUserId },
-      //     collectedVouchers: {
-      //       $elemMatch: { "voucher.id": { $in: appliedVoucherIds } },
-      //     },
-      //   },
-      //   update: {
-      //     $set: { "collectedVouchers.$.used": true },
-      //   },
-      // }),
+      prisma.$runCommandRaw({
+        findAndModify: "User",
+        query: {
+          _id: { $oid: dbUserId },
+          collectedVouchers: {
+            $elemMatch: { "voucher.id": { $in: appliedVoucherIds } },
+          },
+        },
+        update: {
+          $set: { "collectedVouchers.$.used": true },
+        },
+      }),
     ];
 
     if (fromCart) {
