@@ -28,24 +28,29 @@ export const WriteReviewForm = ({
   const router = useRouter();
 
   const onSubmitReview = async () => {
-    // setIsPerformingAction(true);
+    setIsPerformingAction(true);
 
-    const formData = new FormData();
-    reviewImagesFiles.forEach((file) => {
-      formData.append("images", file);
-    });
+    let urls: string[] = [];
 
-    // Upload the images
-    const uploadResponse = await fetch(absoluteUrl("/api/uploadImages"), {
-      method: "POST",
-      body: formData,
-    });
+    if (reviewImagesFiles.length > 0) {
+      const formData = new FormData();
+      reviewImagesFiles.forEach((file) => {
+        formData.append("images", file);
+      });
 
-    if (!uploadResponse.ok) {
-      return toast.error("Something went wrong.");
+      // Upload the images
+      const uploadResponse = await fetch(absoluteUrl("/api/uploadImages"), {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        return toast.error("Something went wrong.");
+      }
+
+      const data = await uploadResponse.json();
+      urls = data.urls;
     }
-
-    const { urls } = await uploadResponse.json();
 
     const promise = createReview({
       productId: orderedProduct.product.id,

@@ -58,22 +58,27 @@ export const OrderRequestForm = ({ orderPackage }: OrderRequestFormProps) => {
         requestFormData,
       });
     } else {
-      const formData = new FormData();
-      requestFormData.proofImages.forEach((file) => {
-        formData.append("images", file);
-      });
+      let urls: string[] = [];
 
-      // Upload the images
-      const uploadResponse = await fetch(absoluteUrl("/api/uploadImages"), {
-        method: "POST",
-        body: formData,
-      });
+      if (requestFormData.proofImages.length > 0) {
+        const formData = new FormData();
+        requestFormData.proofImages.forEach((file) => {
+          formData.append("images", file);
+        });
 
-      if (!uploadResponse.ok) {
-        return toast.error("Something went wrong.");
+        // Upload the images
+        const uploadResponse = await fetch(absoluteUrl("/api/uploadImages"), {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadResponse.ok) {
+          return toast.error("Something went wrong.");
+        }
+
+        const data = await uploadResponse.json();
+        urls = data.urls;
       }
-
-      const { urls } = await uploadResponse.json();
 
       promise = returnOrderedProducts({
         orderPackage,

@@ -9,7 +9,9 @@ import { userOrdersCache, userReturnsCache } from "@/app/_config/cache";
 
 interface returnOrderedProductsParams {
   orderPackage: UserOrder["packages"][number];
-  requestFormData: RequestFormData & { proofImages: string[] };
+  requestFormData: Omit<RequestFormData, "proofImages"> & {
+    proofImages: string[];
+  };
 }
 
 export const returnOrderedProducts = async ({
