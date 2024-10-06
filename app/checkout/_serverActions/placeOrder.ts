@@ -139,14 +139,14 @@ export const placeOrder = async ({
           numOfSales: { increment: 1 },
         },
       }),
-      //@ts-ignore
       prisma.$runCommandRaw({
         findAndModify: "User",
         query: {
           _id: { $oid: dbUserId },
           collectedVouchers: {
-            //@ts-ignore
-            $elemMatch: { "voucher.id": { $in: appliedVoucherIds } },
+            $elemMatch: {
+              "voucher.id": { $in: appliedVoucherIds as string[] },
+            },
           },
         },
         update: {
