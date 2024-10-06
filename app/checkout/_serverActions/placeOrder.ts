@@ -139,6 +139,7 @@ export const placeOrder = async ({
           numOfSales: { increment: 1 },
         },
       }),
+      //@ts-ignore
       prisma.$runCommandRaw({
         findAndModify: "User",
         query: {
