@@ -55,7 +55,7 @@ export const getSignUpUrl = (
 };
 
 export const absoluteUrl = (pathname: string) => {
-  if (process.env.VERCEL_URL)
-    return `https://${process.env.VERCEL_URL}${pathname}`;
+  if (process.env.NODE_ENV === "production")
+    return `https://handouts-revamped.vercel.app${pathname}`;
   return `http://localhost:${process.env.PORT ?? 3000}${pathname}`;
 };
