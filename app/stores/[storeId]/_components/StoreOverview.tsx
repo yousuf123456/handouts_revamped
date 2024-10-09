@@ -6,6 +6,7 @@ import { PaginationParams } from "@/app/_types";
 import { TabbedProducts } from "./TabbedProducts";
 import { storeRecordCache } from "@/app/_config/cache";
 import { getStore } from "../serverFunctions/getStore";
+import { notFound } from "next/navigation";
 
 type StoreOverviewProps = {
   storeId: string;
@@ -22,7 +23,7 @@ export const StoreOverview = async ({
     tags: storeRecordCache.tags(storeId),
   })({ storeId: storeId });
 
-  if (!storeInfo) return <p>Invalid Store Id</p>;
+  if (!storeInfo) return notFound();
 
   return (
     <div>

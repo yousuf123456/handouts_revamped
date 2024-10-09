@@ -54,7 +54,7 @@ export const OrderRequestForm = ({ orderPackage }: OrderRequestFormProps) => {
 
     if (type === "cancel") {
       promise = cancelOrderedProducts({
-        orderPackage,
+        orderPackageId: orderPackage.id,
         requestFormData,
       });
     } else {
@@ -81,7 +81,7 @@ export const OrderRequestForm = ({ orderPackage }: OrderRequestFormProps) => {
       }
 
       promise = returnOrderedProducts({
-        orderPackage,
+        orderPackageId: orderPackage.id,
         requestFormData: { ...requestFormData, proofImages: urls },
       });
     }

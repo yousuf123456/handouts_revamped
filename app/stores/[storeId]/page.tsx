@@ -11,7 +11,7 @@ export default async function StorePage({
   params,
   searchParams,
 }: {
-  params: { sellerId: string };
+  params: { storeId: string };
   searchParams: SearchParams;
 }) {
   const { productsCollectionName, page, filter, sort } = searchParams;
@@ -19,8 +19,8 @@ export default async function StorePage({
   return (
     <StoreOverview
       productsCollectionName={productsCollectionName}
-      storeId={params.sellerId}
       page={parseInt(page || "1")}
+      storeId={params.storeId}
       filter={filter}
       sort={sort}
     />

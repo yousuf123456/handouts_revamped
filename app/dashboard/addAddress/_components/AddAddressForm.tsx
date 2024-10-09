@@ -170,8 +170,8 @@ export const AddAddressForm = ({
           <FormField
             id="landmark"
             label="Landmark"
-            placeholder="E.g. Near the airport"
             register={register}
+            placeholder="E.g. Near the airport"
           />
 
           <div className="space-y-2">

@@ -11,13 +11,22 @@ import { userReviewsCache } from "@/app/_config/cache";
 import { EmptyState } from "@/app/_components/EmptyState";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { routes } from "@/app/_config/routes";
+import { getSignInUrl, routes } from "@/app/_config/routes";
 import { Star } from "lucide-react";
+import { notFound, ReadonlyURLSearchParams, redirect } from "next/navigation";
 
 export const PublishedReviews = async (props: PaginationParams) => {
   const { dbUserId, isUserAuthenticated } = userAuthentication();
 
-  if (!isUserAuthenticated || !dbUserId) return <p>Unauthenticated</p>;
+  if (!isUserAuthenticated)
+    return redirect(
+      getSignInUrl(
+        routes.publishedReviews,
+        new URLSearchParams() as ReadonlyURLSearchParams,
+      ),
+    );
+
+  if (!dbUserId) return notFound();
 
   const { publishedReviews, totalCount } = await unstable_cache(
     getUserPublishedReviews,

@@ -10,9 +10,10 @@ import { AtlasSearchPaginationParams } from "@/app/_types";
 import { ProductCard } from "@/app/_components/ProductCard";
 import { SEARCH_PRODUCTS_PER_PAGE } from "@/app/_config/pagination";
 import { AtlasSearchPaginationControl } from "@/app/_components/AtlasSearchPaginationControl";
-import { getCachedStore } from "@/app/sellers/[sellerId]/serverFunctions/getStore";
+import { getCachedStore } from "@/app/stores/[storeId]/serverFunctions/getStore";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
+import { notFound } from "next/navigation";
 
 type ProductCatalogProps = AtlasSearchPaginationParams & {
   category: string;
@@ -28,7 +29,7 @@ export const SearchResultProducts = async ({
 }: ProductCatalogProps) => {
   const storeInfo = storeId ? await getCachedStore({ storeId }) : null;
 
-  if (storeId && !storeInfo) return <p>Invalid Store Id</p>;
+  if (storeId && !storeInfo) return notFound();
 
   const products = await searchProducts({
     query,

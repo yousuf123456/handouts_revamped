@@ -6,6 +6,7 @@ import { CalendarIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { CancelledProducts } from "./CancelledProducts";
 import { UserCancellation } from "../../_serverFunctions/getUserCancellations";
+import { notFound } from "next/navigation";
 
 export const CancellationDetails = async ({
   cancellationId,
@@ -19,7 +20,7 @@ export const CancellationDetails = async ({
     },
   })) as UserCancellation | null;
 
-  if (!userCancellation) return <p>Invalid Cancellation Id</p>;
+  if (!userCancellation) return notFound();
 
   return (
     <div className="flex flex-col gap-6">

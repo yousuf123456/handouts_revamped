@@ -9,6 +9,7 @@ import { AtlasSearchPaginationSearchParams } from "@/app/_types";
 
 import CategoriesBreadcrumbs from "./CategoriesBreadcrumbs";
 import { Category } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 interface InformationProps {
   productId: string;
@@ -22,7 +23,7 @@ export default async function ProductPage({
   const productDetails = await getProductDetails({ productId });
 
   if (!productDetails) {
-    return <p>Product not found</p>;
+    return notFound();
   }
 
   const { vouchers, freeShippings } = await getProductPromos({

@@ -16,7 +16,7 @@ export const routes = {
   pendingReviews: "/dashboard/pendingReviews",
   cancelledOrders: "/dashboard/cancellations",
   publishedReviews: "/dashboard/publishedReviews",
-  storeDetails: (storeId: string) => `/sellers/${storeId}`,
+  storeDetails: (storeId: string) => `/stores/${storeId}`,
   productDetails: (productId: string) => `/products/${productId}`,
   orderDetails: (orderId: string) => `/dashboard/orders/${orderId}`,
   cancellationDetails: (cancellationId: string) =>

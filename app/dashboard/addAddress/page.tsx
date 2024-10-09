@@ -3,6 +3,7 @@ import React from "react";
 import { AddAddressForm } from "./_components/AddAddressForm";
 import { HeadingWrapper } from "../_components/HeadingWrapper";
 import getDBUser from "@/app/_serverActions/getDBUser";
+import { notFound } from "next/navigation";
 
 const getExistingAddress = async (addressId: string | undefined) => {
   const existingAddress = (await getDBUser()).user?.addressDiary.filter(
@@ -25,8 +26,7 @@ export default async function AddAddressPage({
     ? await getExistingAddress(searchParams.addressId)
     : undefined;
 
-  if (searchParams.addressId && !existingAddress)
-    return <p>Invalid Address Id</p>;
+  if (searchParams.addressId && !existingAddress) return notFound();
 
   return (
     <HeadingWrapper

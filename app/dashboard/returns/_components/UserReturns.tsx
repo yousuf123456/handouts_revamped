@@ -12,14 +12,23 @@ import { EmptyState } from "@/app/_components/EmptyState";
 import { Undo2 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { routes } from "@/app/_config/routes";
+import { getSignInUrl, routes } from "@/app/_config/routes";
+import { notFound, ReadonlyURLSearchParams, redirect } from "next/navigation";
 
 type UserReturnsProps = PaginationParams;
 
 export const UserReturns = async (params: UserReturnsProps) => {
   const { dbUserId, isUserAuthenticated } = userAuthentication();
 
-  if (!dbUserId || !isUserAuthenticated) return <p>Unauthenticated</p>;
+  if (!isUserAuthenticated)
+    return redirect(
+      getSignInUrl(
+        routes.returnedOrders,
+        new URLSearchParams() as ReadonlyURLSearchParams,
+      ),
+    );
+
+  if (!dbUserId) return notFound();
 
   const { userReturns, totalCount } = await unstable_cache(
     getUserReturns,

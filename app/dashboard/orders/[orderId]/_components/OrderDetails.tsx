@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { UserOrder } from "../../_serverFunctions/getUserOrders";
 import { OrderAddresses } from "./OrderAddresses";
 import { Address } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 export const OrderDetails = async ({ orderId }: { orderId: string }) => {
   const userOrder = (await prisma.order.findUnique({
@@ -21,7 +22,7 @@ export const OrderDetails = async ({ orderId }: { orderId: string }) => {
     },
   })) as UserOrder | null;
 
-  if (!userOrder) return <p>Invalid Order Id</p>;
+  if (!userOrder) return notFound();
 
   return (
     <div className="flex flex-col gap-6">

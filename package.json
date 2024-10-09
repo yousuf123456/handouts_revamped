@@ -17,7 +17,7 @@
     "@clerk/nextjs": "^5.4.1",
     "@next/bundle-analyzer": "^14.0.4",
     "@nextui-org/react": "^2.1.12",
-    "@prisma/client": "^5.1.1",
+    "@prisma/client": "^5.20.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",
@@ -73,7 +73,7 @@
     "@types/uuid": "^10.0.0",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.5.3",
-    "prisma": "^5.1.1",
+    "prisma": "^5.20.0",
     "typescript": "^5.1.5"
   },
   "browser": {

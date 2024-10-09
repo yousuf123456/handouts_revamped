@@ -9,6 +9,8 @@ import { CheckoutTotal } from "./CheckoutTotal";
 import { CheckoutProductsGroup } from "./CheckoutProductsGroup";
 import { CheckoutDetails } from "./CheckoutDetails";
 import getDBUser from "@/app/_serverActions/getDBUser";
+import { ReadonlyURLSearchParams, redirect } from "next/navigation";
+import { getSignInUrl } from "@/app/_config/routes";
 
 export interface GroupedCheckoutProducts {
   [storeId: string]: {
@@ -50,7 +52,17 @@ export const CheckoutSummary = async ({
 }: CheckoutSummaryProps) => {
   const { user } = await getDBUser();
 
-  if (!user) return <p>Unauthenticated</p>;
+  if (!user)
+    return redirect(
+      getSignInUrl(
+        "/checkout",
+        new URLSearchParams(
+          fromCart
+            ? `fromCart=true`
+            : `quantity=${quantity}&productId=${productId}&selectedCombinationId=${selectedCombinationId}`,
+        ) as ReadonlyURLSearchParams,
+      ),
+    );
 
   const checkoutData = await getCheckoutData({
     fromCart,

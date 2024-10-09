@@ -4,9 +4,8 @@ import prisma from "../_libs/prismadb";
 
 import getDBUser from "./getDBUser";
 import { ActionResult } from "../_types";
-import { BrowsingHistoryProduct } from "@prisma/client";
-import { revalidateTag } from "next/cache";
 import { userRecordCache } from "../_config/cache";
+import { BrowsingHistoryProduct } from "@prisma/client";
 
 interface addBrowsingHistoryParams {
   product: BrowsingHistoryProduct;
@@ -36,7 +35,7 @@ export const addBrowsingHistory = async ({
     let updatedBrowsingHistory = user.browsingHistory;
     updatedBrowsingHistory.push(product);
 
-    if (user.browsingHistory.length >= 20) updatedBrowsingHistory.shift();
+    if (user.browsingHistory.length >= 10) updatedBrowsingHistory.shift();
 
     await prisma.user.update({
       where: {

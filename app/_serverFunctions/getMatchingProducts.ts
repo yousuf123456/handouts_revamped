@@ -1,6 +1,6 @@
 import prisma from "../_libs/prismadb";
 
-import { Product } from "@prisma/client";
+import { BrowsingHistoryProduct, Product } from "@prisma/client";
 import { PipelineStage } from "mongoose";
 import { AtlasSearchPaginationParams, ProductAttributes } from "../_types";
 import { mapMongoToPrisma } from "../_utils/formatingUtils";
@@ -21,12 +21,7 @@ type MatchedProduct = {
 };
 
 type Parameters = Partial<AtlasSearchPaginationParams> & {
-  productsToMatch: (Pick<
-    Product,
-    "name" | "attributes" | "categoryTreeData" | "id"
-  > & {
-    attributes: ProductAttributes;
-  })[];
+  productsToMatch: BrowsingHistoryProduct[];
 };
 
 export const getMatchingProducts = async (params: Parameters) => {

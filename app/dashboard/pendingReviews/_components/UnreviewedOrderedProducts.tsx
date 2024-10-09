@@ -12,13 +12,22 @@ import { getUnreviewedOrderedProducts } from "../_serverFunctions/getUnreviewedO
 import { StarHalf } from "lucide-react";
 import { EmptyState } from "@/app/_components/EmptyState";
 import Link from "next/link";
-import { routes } from "@/app/_config/routes";
+import { getSignInUrl, routes } from "@/app/_config/routes";
 import { Button } from "@/components/ui/button";
+import { notFound, ReadonlyURLSearchParams, redirect } from "next/navigation";
 
 export const UnreviewedOrderedProducts = async (props: PaginationParams) => {
   const { isUserAuthenticated, dbUserId } = userAuthentication();
 
-  if (!isUserAuthenticated || !dbUserId) return <p>Unauthenticated</p>;
+  if (!isUserAuthenticated)
+    return redirect(
+      getSignInUrl(
+        routes.pendingReviews,
+        new URLSearchParams() as ReadonlyURLSearchParams,
+      ),
+    );
+
+  if (!dbUserId) return notFound();
 
   const { unreviewedOrderedProducts, totalCount } = await unstable_cache(
     getUnreviewedOrderedProducts,

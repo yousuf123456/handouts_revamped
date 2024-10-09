@@ -33,7 +33,7 @@ export function HeroSection() {
   return (
     <section
       id="overlay-image"
-      className="relative -top-[80px] h-full min-h-[calc(100vh+80px)] w-full"
+      className="relative h-full min-h-[calc(100vh+80px)] w-full"
     >
       <Image
         fill

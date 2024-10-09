@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckoutSummary } from "./_components/CheckoutSummary";
+import { notFound } from "next/navigation";
 
 interface SearchParams {
   fromCart?: string;
@@ -14,6 +15,8 @@ export default function Checkout({
   searchParams: SearchParams;
 }) {
   const { fromCart, quantity, productId, selectedCombinationId } = searchParams;
+
+  if (fromCart !== "true" && (!quantity || !productId)) return notFound();
 
   return (
     <div className="mx-auto w-full max-w-screen-xl px-4 py-8 md:pt-12">

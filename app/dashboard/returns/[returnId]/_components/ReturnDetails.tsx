@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { UserReturn } from "../../_serverFunctions/getUserReturns";
 import { ReturnedProducts } from "./ReturnedProducts";
 import { ReturnRequestImages } from "./ReturnRequestImages";
+import { notFound } from "next/navigation";
 
 export const ReturnDetails = async ({ returnId }: { returnId: string }) => {
   const userReturn = (await prisma.returnRequest.findUnique({
@@ -17,7 +18,7 @@ export const ReturnDetails = async ({ returnId }: { returnId: string }) => {
     },
   })) as UserReturn | null;
 
-  if (!userReturn) return <p>Invalid Return Id</p>;
+  if (!userReturn) return notFound();
 
   return (
     <div className="flex flex-col gap-6">

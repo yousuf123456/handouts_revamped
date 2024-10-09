@@ -3,17 +3,17 @@
 import prisma from "@/app/_libs/prismadb";
 import { ActionResult } from "@/app/_types";
 import { currentUser } from "@clerk/nextjs/server";
-import { RATING_AND_REVIEWS_PER_BUCKET_COUNT } from "@/app/_config/pagination";
 import { productReviewsCache, userReviewsCache } from "@/app/_config/cache";
+import { RATING_AND_REVIEWS_PER_BUCKET_COUNT } from "@/app/_config/pagination";
 
-interface createReviewParams {
+type createReviewParams = {
   rating: 1 | 2 | 3 | 4 | 5;
   orderedProductId: string;
   reviewImages: string[];
   productId: string;
   storeId: string;
   review: string;
-}
+};
 
 export const createReview = async (
   params: createReviewParams,
@@ -33,6 +33,28 @@ export const createReview = async (
       reviewImages,
       orderedProductId,
     } = params;
+
+    const orderedProduct = await prisma.orderedProduct.findUnique({
+      where: {
+        id: orderedProductId,
+        customerId: dbUserId,
+      },
+    });
+
+    if (!orderedProduct)
+      return { success: false, message: "Inavlid Ordered Product Id." };
+
+    if (orderedProduct.status !== "Delievered")
+      return {
+        success: false,
+        message: "Ordered product is not delievered yet.",
+      };
+
+    if (orderedProduct.hasBeenReviewed)
+      return {
+        success: false,
+        message: "Ordered Product has already been reviewed.",
+      };
 
     const product = await prisma.product.findUnique({
       where: { id: productId },

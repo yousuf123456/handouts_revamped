@@ -17,19 +17,31 @@ function isPackageInInitialStages(packageStatus: OrderStatus) {
 }
 
 interface cancelOrderedProductsParams {
+  orderPackageId: string;
   requestFormData: RequestFormData;
-  orderPackage: UserOrder["packages"][number];
 }
 
 export const cancelOrderedProducts = async ({
   requestFormData,
-  orderPackage,
+  orderPackageId,
 }: cancelOrderedProductsParams): Promise<ActionResult> => {
   try {
     const { isUserAuthenticated, dbUserId } = userAuthentication();
 
     if (!isUserAuthenticated || !dbUserId)
       return { success: false, message: "Unauthorized" };
+
+    const orderPackage = await prisma.package.findUnique({
+      where: {
+        id: orderPackageId,
+      },
+      include: {
+        orderedProducts: true,
+      },
+    });
+
+    if (!orderPackage)
+      return { success: false, message: "Invalid Order Package Id." };
 
     const areAllProductsCancelled =
       requestFormData.selectedOrderedProducts.length ===

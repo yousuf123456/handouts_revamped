@@ -1,25 +1,36 @@
 import React from "react";
 
-import { PaginationParams } from "@/app/_types";
-import { CancellationCard } from "./CancellationCard";
-import { USER_CANCELLATIONS_PER_PAGE } from "@/app/_config/pagination";
-import { PaginationControl } from "@/app/_components/PaginationControl";
-import { getUserCancellations } from "../_serverFunctions/getUserCancellations";
+import Link from "next/link";
 import { unstable_cache } from "next/cache";
 import { userAuthentication } from "@/app/_serverFunctions/userAuthentication";
-import { userCancellationsCache } from "@/app/_config/cache";
-import { EmptyState } from "@/app/_components/EmptyState";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { routes } from "@/app/_config/routes";
+
 import { CircleOff } from "lucide-react";
+import { getSignInUrl, routes } from "@/app/_config/routes";
+import { Button } from "@/components/ui/button";
+import { CancellationCard } from "./CancellationCard";
+import { EmptyState } from "@/app/_components/EmptyState";
+import { userCancellationsCache } from "@/app/_config/cache";
+import { PaginationControl } from "@/app/_components/PaginationControl";
+import { getUserCancellations } from "../_serverFunctions/getUserCancellations";
+
+import { USER_CANCELLATIONS_PER_PAGE } from "@/app/_config/pagination";
+import { PaginationParams } from "@/app/_types";
+import { notFound, ReadonlyURLSearchParams, redirect } from "next/navigation";
 
 type UserCancellationsProps = PaginationParams;
 
 export const UserCancellations = async (props: UserCancellationsProps) => {
   const { dbUserId, isUserAuthenticated } = userAuthentication();
 
-  if (!dbUserId || !isUserAuthenticated) return <p>Unauthenticated</p>;
+  if (!isUserAuthenticated)
+    return redirect(
+      getSignInUrl(
+        routes.cancelledOrders,
+        new URLSearchParams() as ReadonlyURLSearchParams,
+      ),
+    );
+
+  if (!dbUserId) return notFound();
 
   const { userCancellations, totalCount } = await unstable_cache(
     getUserCancellations,
