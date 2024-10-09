@@ -99,13 +99,13 @@ export function RatingAndReviewCard({
         </div>
 
         <div className="mt-3 flex space-x-2 overflow-x-auto scrollbar-none">
-          {ratingAndReview.reviewImages.map((img) => (
+          {ratingAndReview.reviewImages.map((img, i) => (
             <Image
-              key={img}
+              key={i}
+              src={img}
               width="72"
               height="72"
-              alt={`i`}
-              src={`/placeholder.svg?height=64&width=64&text=Image+${img}`}
+              alt={`Review Image`}
               className="h-16 w-16 flex-shrink-0 rounded-md bg-green-100 object-cover"
               style={{
                 aspectRatio: "1/1",
