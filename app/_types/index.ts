@@ -49,6 +49,10 @@ export interface VariantsType {
   };
 }
 
+export interface AttributesType {
+  [key: string]: string | string[];
+}
+
 interface BaseUser {
   id: string;
   authUserId: string;

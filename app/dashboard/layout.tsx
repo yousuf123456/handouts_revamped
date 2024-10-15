@@ -95,6 +95,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 <Link
                   key={i}
                   href={route}
+                  onClick={() => setSidebarOpen(false)}
                   className={cn(
                     buttonVariants({
                       variant: "ghost",

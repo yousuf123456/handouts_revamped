@@ -9,9 +9,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { ProductActions } from "./ProductActions";
 import { getPriceInfo } from "@/app/_utils/getPriceInfo";
 import { routes } from "@/app/_config/routes";
+import { ProductVouchers } from "./ProductVouchers";
 import { FreeShipping, ProductCombination, Voucher } from "@prisma/client";
 import { ProductDetails } from "../_serverFunctions/getProductDetails";
-import { ProductVouchers } from "./ProductVouchers";
 import { ProductFreeShippings } from "./ProductFreeShippings";
 
 const Heading = ({ text }: { text: string }) => {
@@ -72,6 +72,7 @@ export const ProductMeta = ({
     `productId=${product.id}`,
     `quantity=${quantity}`,
   ];
+
   if (selectedCombination?.id)
     checkoutUrlSearchParams.push(
       `selectedCombinationId=${selectedCombination.id}`,
@@ -119,10 +120,17 @@ export const ProductMeta = ({
           </div>
         </div>
 
-        <div className="mt-4 flex flex-col gap-4 sm:flex-row">
-          <ProductVouchers vouchers={availableVouchers} />
-          <ProductFreeShippings freeShippings={availableFreeShippings} />
-        </div>
+        {(availableVouchers.length > 0 ||
+          availableFreeShippings.length > 0) && (
+          <div className="mt-4 flex flex-col gap-4 sm:flex-row">
+            {availableVouchers.length > 0 && (
+              <ProductVouchers vouchers={availableVouchers} />
+            )}
+            {availableFreeShippings.length > 0 && (
+              <ProductFreeShippings freeShippings={availableFreeShippings} />
+            )}
+          </div>
+        )}
 
         <div className="my-2 h-[1px] w-full bg-zinc-300" />
 
@@ -212,6 +220,29 @@ export const ProductMeta = ({
         </div>
 
         <div className="my-2 h-[1px] w-full bg-zinc-300" />
+
+        {product.attributes && Object.keys(product.attributes).length > 0 && (
+          <div className="mt-6 flex flex-col gap-3">
+            <Heading text="Attributes" />
+
+            <div className="flex flex-col gap-4">
+              {Object.keys(product.attributes).map((attribute) => (
+                <div className="flex gap-2">
+                  <p className="font-roboto text-base font-semibold text-zinc-800">
+                    {attribute}:
+                  </p>
+
+                  <p className="font-roboto text-base text-zinc-700">
+                    {typeof product.attributes[attribute] === "string"
+                      ? product.attributes[attribute]
+                      : Object.values(product.attributes[attribute]).join(", ")}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="font-roboto text-base text-zinc-700"></p>
+          </div>
+        )}
 
         <div className="mt-6 flex flex-col gap-3">
           <Heading text="Description" />

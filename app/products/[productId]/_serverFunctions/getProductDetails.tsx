@@ -1,9 +1,12 @@
 import prisma from "@/app/_libs/prismadb";
-import { VariantsType } from "@/app/_types";
+import { AttributesType, VariantsType } from "@/app/_types";
 
 export type ProductDetails = Awaited<
-  ReturnType<typeof getProductDetails & { variants: VariantsType }>
->;
+  Omit<ReturnType<typeof getProductDetails>, "attributes" | "variants">
+> & {
+  variants: VariantsType;
+  attributes: AttributesType;
+};
 
 export const getProductDetails = async ({
   productId,
@@ -32,7 +35,10 @@ export const getProductDetails = async ({
       },
     });
 
-    return product as typeof product & { variants?: VariantsType };
+    return product as typeof product & {
+      variants?: VariantsType;
+      attributes: AttributesType;
+    };
   } catch (e) {
     console.log("Error in getting product details: ", e);
     return null;

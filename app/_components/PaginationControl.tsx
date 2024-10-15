@@ -78,7 +78,7 @@ export const PaginationControl = ({
         size="sm"
         variant="outline"
         onClick={goOnNextPage}
-        disabled={currentPage === numberOfPages}
+        disabled={currentPage >= numberOfPages}
       >
         <span className="sr-only sm:not-sr-only sm:mr-2">Next</span>
         <ChevronRight className="h-4 w-4" />

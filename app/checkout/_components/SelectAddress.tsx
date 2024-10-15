@@ -35,7 +35,7 @@ export const SelectAddress = ({
 
   return (
     <div className="w-full">
-      <AddressCard address={selectedAddress} />
+      <AddressCard address={selectedAddress} hideActions />
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
@@ -54,7 +54,7 @@ export const SelectAddress = ({
                 className="cursor-pointer"
                 onClick={() => handleAddressSelect(address)}
               >
-                <AddressCard address={address} />
+                <AddressCard address={address} hideActions />
               </div>
             ))}
           </div>

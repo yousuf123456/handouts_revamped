@@ -8,7 +8,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/app/_utils/cn";
 import { UserMenu } from "./UserMenu";
 
-export const UserAccount = () => {
+export const UserAccount = ({
+  setCatsOpen,
+}: {
+  setCatsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const { user, isLoaded } = useUser();
 
   if (!isLoaded)
@@ -46,7 +50,7 @@ export const UserAccount = () => {
             "flex flex-shrink-0 items-center justify-end xl:w-[206px]",
           )}
         >
-          <UserMenu />
+          <UserMenu setCatsOpen={setCatsOpen} />
         </div>
       ) : (
         <div
@@ -54,7 +58,7 @@ export const UserAccount = () => {
             "flex flex-shrink-0 items-center justify-start xl:hidden",
           )}
         >
-          <UserMenu />
+          <UserMenu setCatsOpen={setCatsOpen} />
         </div>
       )}
     </>

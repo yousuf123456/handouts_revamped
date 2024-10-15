@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { useSession } from "@clerk/nextjs";
-import { IconWrapper } from "@/app/(landing)/_components/newHeader/components/IconWrapper";
+import { IconWrapper } from "@/app/(landing)/_components/header/components/IconWrapper";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getSignInUrl } from "@/app/_config/routes";
 

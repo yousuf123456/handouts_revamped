@@ -68,7 +68,7 @@ export default function TrendingStyles() {
   return (
     <section className=" bg-gray-50 py-32 sm:py-40">
       <div className="mx-auto max-w-screen-xl px-4">
-        <h2 className="mb-12 text-center text-3xl font-bold uppercase text-gray-900 sm:text-4xl">
+        <h2 className="mb-12 text-start text-3xl font-bold uppercase text-gray-900 sm:text-4xl">
           Trending Styles
         </h2>
 
@@ -110,7 +110,7 @@ export default function TrendingStyles() {
               </button>
             </div>
 
-            <div className="w-full md:w-1/3">
+            <div className="w-full px-4 md:w-1/3">
               <AnimatePresence mode="wait">
                 <m.div
                   key={currentIndex}

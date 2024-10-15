@@ -53,24 +53,11 @@ export const ProductOverview: React.FC<ProductInformationProps> = async ({
   searchParams,
   freeShippings,
 }) => {
-  // Make it real
-  const fakeDetailedImages = [
-    "/images/exclusiveSection/frames.jpg",
-    "/images/exclusiveSection/cosmicPlayland.jpg",
-    "/images/exclusiveSection/handmade.jpg",
-    "/images/exclusiveSection/luxury_decor.jpg",
-  ];
-
   return (
     <div className="flex flex-col gap-16">
       <div className="grid grid-cols-1 gap-14 min-[960px]:grid-cols-9 min-[960px]:gap-8">
         <RevamedProductImages
-          mainImage={product?.image}
-          images={[
-            ...product.detailedImages,
-            ...fakeDetailedImages,
-            product.image!,
-          ]}
+          images={[...product.detailedImages, product.image!]}
         />
 
         <div className="flex flex-col gap-12 max-[960px]:px-3 min-[960px]:col-span-4">
@@ -93,7 +80,7 @@ export const ProductOverview: React.FC<ProductInformationProps> = async ({
                   fallback={
                     <div className="flex flex-col gap-5">
                       <QuestionReviewCardSkeleton />
-                      <QuestionReviewCardSkeleton />{" "}
+                      <QuestionReviewCardSkeleton />
                       <QuestionReviewCardSkeleton />
                     </div>
                   }
@@ -106,6 +93,7 @@ export const ProductOverview: React.FC<ProductInformationProps> = async ({
                 </Suspense>
               </AccordionContent>
             </AccordionItem>
+
             <AccordionItem value="questions" className="border-t-0">
               <AccordionTrigger>
                 <p className="font-prim text-base font-semibold uppercase text-black/80 sm:text-lg">
@@ -118,7 +106,7 @@ export const ProductOverview: React.FC<ProductInformationProps> = async ({
                   fallback={
                     <div className="flex flex-col gap-5">
                       <QuestionReviewCardSkeleton />
-                      <QuestionReviewCardSkeleton />{" "}
+                      <QuestionReviewCardSkeleton />
                       <QuestionReviewCardSkeleton />
                     </div>
                   }

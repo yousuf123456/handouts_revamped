@@ -33,13 +33,20 @@ import {
   Undo2,
   StarHalf,
   MapPin,
+  Heart,
+  LayoutGrid,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { getSearchParamsStringsArray } from "@/app/_utils";
 import { routes } from "@/app/_config/routes";
+import { RiShoppingCartLine } from "react-icons/ri";
 
-export const UserMenu = () => {
+export const UserMenu = ({
+  setCatsOpen,
+}: {
+  setCatsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [open, setOpen] = useState(false);
 
   const { isLoaded, user } = useUser();
@@ -56,13 +63,46 @@ export const UserMenu = () => {
 
   if (!isLoaded) return null;
 
+  const links = [
+    {
+      Icon: MapPin,
+      label: "Address Diary",
+      href: routes.addressDiary,
+    },
+    {
+      label: "Orders",
+      Icon: ShoppingBag,
+      href: routes.orders,
+    },
+    {
+      Icon: CircleOff,
+      label: "Cancelled Orders",
+      href: routes.cancelledOrders,
+    },
+    {
+      Icon: Undo2,
+      label: "Returned Orders",
+      href: routes.returnedOrders,
+    },
+    {
+      Icon: Star,
+      label: "Published Reviews",
+      href: routes.publishedReviews,
+    },
+    {
+      Icon: StarHalf,
+      label: "Pending Reviews",
+      href: routes.pendingReviews,
+    },
+  ];
+
   return (
     <>
       <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
         <DropdownMenuTrigger>
           <div className="relative h-9 w-9 overflow-hidden rounded-full">
             <Image
-              src={user?.imageUrl || "/placeholder.jpg"}
+              src={user?.imageUrl || "/images/placeholders/placeholder.jpg"}
               alt={
                 user?.primaryEmailAddress?.emailAddress! || "not signed in user"
               }
@@ -70,6 +110,7 @@ export const UserMenu = () => {
             />
           </div>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent
           sideOffset={20}
           className="w-72 max-w-xl rounded-xl min-[360px]:w-80"
@@ -106,49 +147,40 @@ export const UserMenu = () => {
             className="max-h-72 overflow-y-auto overflow-x-hidden scrollbar-thin"
             data-lenis-prevent
           >
+            <DropdownMenuItem
+              className="sm:hidden"
+              onClick={() => setCatsOpen(true)}
+            >
+              <LayoutGrid className="mr-4 h-4 w-4 text-zinc-700" />
+              <span>Ctegories</span>
+            </DropdownMenuItem>
+
+            <Link href={routes.favorites} className="md:hidden">
+              <DropdownMenuItem>
+                <Heart className="mr-4 h-4 w-4 text-zinc-700" />
+                <span>Favorites</span>
+              </DropdownMenuItem>
+            </Link>
+
+            <Link href={routes.cart} className="md:hidden">
+              <DropdownMenuItem>
+                <RiShoppingCartLine className="mr-4 h-4 w-4 text-zinc-700" />
+                <span>Cart</span>
+              </DropdownMenuItem>
+            </Link>
+
+            <DropdownMenuSeparator className="md:hidden" />
+
             {user && (
               <>
-                <Link href={routes.addressDiary}>
-                  <DropdownMenuItem>
-                    <MapPin className="mr-4 h-4 w-4 text-zinc-700" />
-                    <span>Address Diary</span>
-                  </DropdownMenuItem>
-                </Link>
-
-                <Link href={routes.orders}>
-                  <DropdownMenuItem>
-                    <ShoppingBag className="mr-4 h-4 w-4 text-zinc-700" />
-                    <span>Orders</span>
-                  </DropdownMenuItem>
-                </Link>
-
-                <Link href={routes.cancelledOrders}>
-                  <DropdownMenuItem>
-                    <CircleOff className="mr-4 h-4 w-4 text-zinc-700" />
-                    <span>Cancelled Orders</span>
-                  </DropdownMenuItem>
-                </Link>
-
-                <Link href={routes.returnedOrders}>
-                  <DropdownMenuItem>
-                    <Undo2 className="mr-4 h-4 w-4 text-zinc-700" />
-                    <span>Returned Orders</span>
-                  </DropdownMenuItem>
-                </Link>
-
-                <Link href={routes.pendingReviews}>
-                  <DropdownMenuItem>
-                    <StarHalf className="mr-4 h-4 w-4 text-zinc-700" />
-                    <span>Pending Reviews</span>
-                  </DropdownMenuItem>
-                </Link>
-
-                <Link href={routes.publishedReviews}>
-                  <DropdownMenuItem>
-                    <Star className="mr-4 h-4 w-4 text-zinc-700" />
-                    <span>Published Reviews</span>
-                  </DropdownMenuItem>
-                </Link>
+                {links.map((link) => (
+                  <Link href={link.href}>
+                    <DropdownMenuItem>
+                      <link.Icon className="mr-4 h-4 w-4 text-zinc-700" />
+                      <span>{link.label}</span>
+                    </DropdownMenuItem>
+                  </Link>
+                ))}
 
                 <DropdownMenuSeparator />
 

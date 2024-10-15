@@ -152,7 +152,7 @@ export const Searchbar = ({ imageTheme }: { imageTheme: boolean }) => {
       >
         <Search
           className={cn(
-            "h-4 w-4 text-black md:h-5 md:w-5",
+            "h-4 w-4 text-black sm:h-5 sm:w-5",
             imageTheme && "text-white",
           )}
         />

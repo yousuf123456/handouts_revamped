@@ -29,8 +29,8 @@ export default async function SearchPage({
     <ProductCatalog
       {...searchParams}
       query={searchParams.q}
-      category={params.category}
       storeId={searchParams.storeId}
+      category={decodeURIComponent(params.category)}
     />
   );
 }

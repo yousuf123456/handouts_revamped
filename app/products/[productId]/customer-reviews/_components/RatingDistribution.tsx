@@ -23,10 +23,12 @@ export const RatingDistribution = ({
           <h2 className="mb-2 text-lg font-semibold sm:mb-0 sm:text-xl">
             Customer Reviews
           </h2>
+
           <div className="flex items-center gap-3">
             <span className="text-2xl font-bold sm:text-4xl">
-              {averageRating.toFixed(1)}
+              {averageRating ? averageRating.toFixed(1) : 0}
             </span>
+
             <div className="flex">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
@@ -39,6 +41,7 @@ export const RatingDistribution = ({
                 />
               ))}
             </div>
+
             <span className="text-xs text-muted-foreground sm:text-sm">
               Based on {ratingsCount} reviews
             </span>

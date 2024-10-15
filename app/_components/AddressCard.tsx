@@ -20,7 +20,13 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { deleteAddress } from "../dashboard/addressDiary/_serverActions/deleteAddress";
 import { toast } from "sonner";
 
-export const AddressCard = ({ address }: { address: Address }) => {
+export const AddressCard = ({
+  address,
+  hideActions,
+}: {
+  address: Address;
+  hideActions?: boolean;
+}) => {
   const [isPerformingAction, setIsPerformingAction] = useState(false);
 
   const onDelete = async (addressId: string) => {
@@ -76,33 +82,35 @@ export const AddressCard = ({ address }: { address: Address }) => {
           </div>
         </div>
 
-        <div className="mt-3 flex justify-end space-x-2">
-          <Link
-            href={`${routes.addAddress}?addressId=${address.id}`}
-            className={buttonVariants({
-              size: "sm",
-              variant: "outline",
-              className: "px-2 text-xs",
-            })}
-          >
-            <Edit className="mr-1 h-3 w-3" />
-            Edit
-          </Link>
+        {!hideActions && (
+          <div className="mt-3 flex justify-end space-x-2">
+            <Link
+              href={`${routes.addAddress}?addressId=${address.id}`}
+              className={buttonVariants({
+                size: "sm",
+                variant: "outline",
+                className: "px-2 text-xs",
+              })}
+            >
+              <Edit className="mr-1 h-3 w-3" />
+              Edit
+            </Link>
 
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={isPerformingAction}
-            onClick={() => onDelete(address.id)}
-            className="px-2 text-xs text-destructive hover:border-destructive hover:bg-destructive hover:text-destructive-foreground"
-          >
-            {!isPerformingAction && <Trash2 className="mr-1 h-3 w-3" />}
-            {isPerformingAction && (
-              <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-            )}
-            Delete
-          </Button>
-        </div>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={isPerformingAction}
+              onClick={() => onDelete(address.id)}
+              className="px-2 text-xs text-destructive hover:border-destructive hover:bg-destructive hover:text-destructive-foreground"
+            >
+              {!isPerformingAction && <Trash2 className="mr-1 h-3 w-3" />}
+              {isPerformingAction && (
+                <Loader2 className="mr-1 h-3 w-3 animate-spin" />
+              )}
+              Delete
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

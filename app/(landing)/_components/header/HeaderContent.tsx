@@ -4,20 +4,21 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { Heart } from "lucide-react";
-import { routes } from "@/app/_config/routes";
-import { Searchbar } from "./components/Searchbar";
-import { RiShoppingCartLine } from "react-icons/ri";
-import { IconWrapper } from "./components/IconWrapper";
-import { UserAccount } from "./components/UserAccount";
 import { cn } from "@/app/_utils/cn";
+import { Heart, LayoutGrid } from "lucide-react";
+import { Searchbar } from "./Searchbar";
+import { IconWrapper } from "./IconWrapper";
+import { UserAccount } from "./UserAccount";
+import { routes } from "@/app/_config/routes";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { createReview } from "@/app/dashboard/writeReview/_serverActions/createReview";
+import { RiShoppingCartLine } from "react-icons/ri";
+import { Category } from "@prisma/client";
+import { Categories } from "./Categories";
 
-export const Header = () => {
+export const HeaderContent = ({ categories }: { categories: Category[] }) => {
+  const [catsOpen, setCatsOpen] = useState(false);
+
   const pathname = usePathname();
-
   const [imageTheme, setImageTheme] = useState(pathname === "/");
 
   useEffect(() => {
@@ -64,14 +65,19 @@ export const Header = () => {
           <div className="relative flex w-full items-center gap-4 md:gap-6 lg:gap-8">
             <Link href={routes.home}>
               <div className="flex items-center gap-2 lg:gap-3">
-                <div className="relative h-8 w-8 lg:h-9 lg:w-9">
-                  <Image src="/logos/HandoutsLOGO.png" alt="Logo" fill />
+                <div className="relative h-8 w-12 lg:h-9 lg:w-16">
+                  <Image
+                    src="/logos/HandoutsLOGO.png"
+                    alt="Logo"
+                    className=" object-contain"
+                    fill
+                  />
                 </div>
 
                 <p
                   className={cn(
-                    "mt-1 hidden text-sm font-medium uppercase tracking-wide text-black sm:block sm:text-base",
-                    imageTheme && "text-white",
+                    "mt-1 hidden bg-gradient-to-br from-gray-900 via-gray-700 to-gray-200 bg-clip-text text-sm font-medium uppercase tracking-wide text-transparent sm:block sm:text-base",
+                    imageTheme && "from-gray-50 via-gray-100 to-gray-500",
                   )}
                 >
                   Handouts
@@ -83,6 +89,24 @@ export const Header = () => {
           </div>
 
           <div className="flex flex-shrink-0 items-center justify-end gap-5">
+            <div className="hidden sm:block">
+              <IconWrapper
+                label="Categories"
+                className={cn(
+                  imageTheme &&
+                    " border-white/30 bg-white/20 hover:bg-white/30 ",
+                )}
+                onClick={() => setCatsOpen(true)}
+              >
+                <LayoutGrid
+                  className={cn(
+                    "h-5 w-5 text-black",
+                    imageTheme && "text-white",
+                  )}
+                />
+              </IconWrapper>
+            </div>
+
             <Link href={routes.favorites} className="hidden md:block">
               <IconWrapper
                 label="Favourites"
@@ -115,10 +139,16 @@ export const Header = () => {
               </IconWrapper>
             </Link>
 
-            <UserAccount />
+            <UserAccount setCatsOpen={setCatsOpen} />
           </div>
         </div>
       </div>
+
+      <Categories
+        catsOpen={catsOpen}
+        setCatsOpen={setCatsOpen}
+        categories={categories}
+      />
     </div>
   );
 };

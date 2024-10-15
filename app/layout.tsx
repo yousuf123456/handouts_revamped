@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import { Footer } from "./(landing)/_components/footer/Footer";
-import { Header } from "./(landing)/_components/newHeader/Header";
+import { Header } from "./(landing)/_components/header/Header";
 
 import { Nunito, Inter } from "next/font/google";
 import { Providers } from "./_components/Providers";

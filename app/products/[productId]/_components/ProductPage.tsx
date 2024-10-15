@@ -32,7 +32,7 @@ export default async function ProductPage({
   });
 
   const categories = productDetails.categoryTreeData as Category[];
-
+  
   return (
     <Suspense fallback={<Loading />}>
       <div className="flex flex-col gap-2">

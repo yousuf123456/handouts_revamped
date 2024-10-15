@@ -95,3 +95,10 @@ export const storeCollectionProductsCache = {
   revalidate: (storeId: string) =>
     revalidateTag(`store:${storeId}-collectionProducts`),
 };
+
+export const allCategoriesCache = {
+  keys: [],
+  tags: [`allCategories`],
+  duration: false as false,
+  revalidate: () => revalidateTag(`allCategories`),
+};

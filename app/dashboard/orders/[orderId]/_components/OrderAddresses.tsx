@@ -13,11 +13,12 @@ export const OrderAddresses = ({
     <div className="my-5 grid grid-cols-1 gap-5 md:grid-cols-2">
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold sm:text-xl">Billing Address</h2>
-        <AddressCard address={billingAddress} />
+        <AddressCard address={billingAddress} hideActions />
       </div>
+
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold sm:text-xl">Shipping Address</h2>
-        <AddressCard address={shippingAddress} />
+        <AddressCard address={shippingAddress} hideActions />
       </div>
     </div>
   );

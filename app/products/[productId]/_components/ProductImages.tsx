@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 interface ProductImagesProps {
-  mainImage: string | null | undefined;
   images: string[];
 }
 
@@ -85,10 +84,7 @@ const Indicators = ({
   );
 };
 
-export const RevamedProductImages = ({
-  mainImage,
-  images,
-}: ProductImagesProps) => {
+export const RevamedProductImages = ({ images }: ProductImagesProps) => {
   const [api, setApi] = useState<CarouselApi>();
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [showingAll, setShowingAll] = useState(false);

@@ -29,7 +29,7 @@ export const RecomendedProducts = async ({
   return (
     <div
       id="matchingProductsContainer"
-      className="mx-auto max-w-screen-xl py-12"
+      className="mx-auto max-w-screen-xl px-3 py-12"
     >
       <h2 className="my-12 text-center text-3xl font-bold uppercase text-gray-800 sm:text-4xl">
         Recomendation

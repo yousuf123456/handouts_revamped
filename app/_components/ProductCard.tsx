@@ -98,12 +98,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           >
             <AnimatePresence mode="wait">
               <motion.div
-                className="relative h-full w-full"
-                key={currentImage}
-                variants={slideVariants}
-                initial={"initial"}
-                animate="visible"
                 exit={"exit"}
+                animate="visible"
+                key={currentImage}
+                initial={"initial"}
+                variants={slideVariants}
+                className="relative h-full w-full bg-gray-100"
               >
                 <ProductImage src={currentImage} fill />
               </motion.div>
