@@ -173,8 +173,8 @@ export const UserMenu = ({
 
             {user && (
               <>
-                {links.map((link) => (
-                  <Link href={link.href}>
+                {links.map((link, i) => (
+                  <Link key={i} href={link.href}>
                     <DropdownMenuItem>
                       <link.Icon className="mr-4 h-4 w-4 text-zinc-700" />
                       <span>{link.label}</span>

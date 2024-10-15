@@ -59,8 +59,9 @@ export const Categories = ({
             if (selectedCat && cat.parentId === selectedCat.id) return true;
             if (!selectedCat && cat.parentId === null) return true;
           })
-          .map((cat) => (
+          .map((cat, i) => (
             <div
+              key={i}
               onClick={() => {
                 if (categories.find((category) => category.parentId === cat.id))
                   return setSelectedCat(cat);

@@ -1,17 +1,17 @@
 "use client";
 import React, { useState } from "react";
 
-import { cn } from "@/app/_utils/cn";
-import { Button } from "@/components/ui/button";
-import { addToCart } from "@/app/_serverActions/addToCart";
-import { addToFavorites } from "@/app/_serverActions/addToFavorites";
 import { toast } from "sonner";
+import { cn } from "@/app/_utils/cn";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { useSession } from "@clerk/nextjs";
-import { IconWrapper } from "@/app/(landing)/_components/header/components/IconWrapper";
+import { Button } from "@/components/ui/button";
+import { addToCart } from "@/app/_serverActions/addToCart";
+import { addToFavorites } from "@/app/_serverActions/addToFavorites";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getSignInUrl } from "@/app/_config/routes";
+import { IconWrapper } from "@/app/(landing)/_components/header/IconWrapper";
 
 type ProductActionsProps = Parameters<typeof addToCart>[number] &
   Parameters<typeof addToFavorites>[number] & {

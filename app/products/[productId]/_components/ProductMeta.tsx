@@ -226,8 +226,8 @@ export const ProductMeta = ({
             <Heading text="Attributes" />
 
             <div className="flex flex-col gap-4">
-              {Object.keys(product.attributes).map((attribute) => (
-                <div className="flex gap-2">
+              {Object.keys(product.attributes).map((attribute, i) => (
+                <div key={i} className="flex gap-2">
                   <p className="font-roboto text-base font-semibold text-zinc-800">
                     {attribute}:
                   </p>
